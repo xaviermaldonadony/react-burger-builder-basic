@@ -1,0 +1,16 @@
+.Content {
+	margin-top: 72px;
+}
+
+.Blur {
+	filter: blur(10px);
+	-moz-filter: blur(10px);
+	-webkit-filter: blur(10px);
+	-o-filter: blur(10px);
+}
+
+@media (min-width: 500px) {
+	.Blur {
+		filter: none;
+	}
+}
