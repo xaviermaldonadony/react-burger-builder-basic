@@ -9,7 +9,11 @@ class Modal extends Component {
 	// Only here fo debugging, should be a functional component
 	// doesn't have to be a class
 	shouldComponentUpdate(nextProps, nextState) {
-		return nextProps.show !== this.props.show;
+		// this component can have 2 diff children
+		return (
+			nextProps.show !== this.props.show ||
+			nextProps.children !== this.props.children
+		);
 	}
 
 	componentDidUpdate() {
