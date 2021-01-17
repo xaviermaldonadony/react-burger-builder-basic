@@ -23,4 +23,3 @@ class App extends Component {
 }
 
 export default App;
-// 13 6

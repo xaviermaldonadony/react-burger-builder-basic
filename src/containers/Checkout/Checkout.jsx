@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import CheckoutSummary from '../../componets/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
+import * as actions from '../../store/actions/index';
+
 class Checkout extends Component {
+	componentWillUnmount() {
+		console.log('unmounted');
+		this.setState = (state, callback) => {
+			return;
+		};
+	}
 	checkoutCancelledHandler = () => {
 		this.props.history.goBack();
 	};
@@ -16,34 +24,38 @@ class Checkout extends Component {
 
 	render() {
 		// console.log(this.props);
-		// let checkoutSummary = (
-		// 	<CheckoutSummary
-		// 		ingredients={this.state.ingredients ? this.state.ingredients : ''}
-		// 		checkoutCancelled={this.checkoutCancelledHandler}
-		// 		checkoutContinued={this.checkoutContinuedHandler}
-		// 	/>
-		// );
+		let summary = <Redirect to='/' />;
 
-		return (
-			<div>
-				{/* {checkoutSummary} */}
-				<CheckoutSummary
-					ingredients={this.props.ings}
-					checkoutCancelled={this.checkoutCancelledHandler}
-					checkoutContinued={this.checkoutContinuedHandler}
-				/>
-				<Route
-					path={this.props.match.path + '/contact-data'}
-					component={ContactData}
-				/>
-			</div>
-		);
+		if (this.props.ings) {
+			// when purchased burger it redirects to home
+			const pruchasedRedirect = this.props.purchased ? (
+				<Redirect to='/' />
+			) : (
+				'null'
+			);
+			summary = (
+				<div>
+					{pruchasedRedirect}
+					<CheckoutSummary
+						ingredients={this.props.ings}
+						checkoutCancelled={this.checkoutCancelledHandler}
+						checkoutContinued={this.checkoutContinuedHandler}
+					/>
+					<Route
+						path={this.props.match.path + '/contact-data'}
+						component={ContactData}
+					/>
+				</div>
+			);
+		}
+		return summary;
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		ings: state.ingredients,
+		ings: state.burgerBuilder.ingredients,
+		purchased: state.order.purchased,
 	};
 };
 
