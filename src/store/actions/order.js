@@ -22,14 +22,15 @@ export const purchaseBurgerStart = () => {
 	};
 };
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
 	return (dispatch) => {
 		dispatch(purchaseBurgerStart());
 		axios
-			.post('/orders.json', orderData)
+			.post(`/orders.json?auth=${token}`, orderData)
 			.then((response) => {
-				console.log(response.data);
+				// console.log(response.data);
 				dispatch(purchaseBurgerSuccess(response.data.name, orderData));
+				// resets purchased to fail, we use this at checkout component to not rerender
 			})
 			.catch((err) => {
 				dispatch(purchaseBurgerFail(err));
@@ -63,10 +64,14 @@ export const fetchOrdersStart = () => {
 	};
 };
 
-export const fetchOrders = () => (dispatch) => {
+export const fetchOrders = (token, userId) => (dispatch) => {
 	dispatch(fetchOrdersStart());
+	console.log(userId);
+	const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+	console.log(queryParams);
+
 	axios
-		.get('/orders.json')
+		.get(`/orders.json${queryParams}`)
 		.then((res) => {
 			const fetchedOrders = [];
 			for (let key in res.data) {

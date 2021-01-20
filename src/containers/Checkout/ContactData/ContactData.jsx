@@ -50,6 +50,7 @@ class ContactData extends Component {
 					required: true,
 					minLength: 5,
 					maxlength: 5,
+					isNumeric: true,
 				},
 				valid: false,
 				touched: false,
@@ -70,12 +71,13 @@ class ContactData extends Component {
 			email: {
 				elementType: 'input',
 				elementConfig: {
-					type: 'text',
-					placeholder: 'email',
+					type: 'email',
+					placeholder: 'Your email',
 				},
 				value: '',
 				validation: {
 					required: true,
+					isEmail: true,
 				},
 				valid: false,
 				touched: false,
@@ -98,22 +100,22 @@ class ContactData extends Component {
 
 	oderHandler = (event) => {
 		event.preventDefault();
-
+		const { ings, price, token, onOrderBurger, userId } = this.props;
+		const { orderForm } = this.state;
 		const formData = {};
 
-		for (let formElementIdentifier in this.state.orderForm) {
-			formData[formElementIdentifier] = this.state.orderForm[
-				formElementIdentifier
-			].value;
+		for (let formElementIdentifier in orderForm) {
+			formData[formElementIdentifier] = orderForm[formElementIdentifier].value;
 		}
 
 		const order = {
-			ingredients: this.props.ings,
-			price: this.props.price,
+			ingredients: ings,
+			price: price,
 			orderData: formData,
+			userId: userId,
 		};
 
-		this.props.onOrderBurger(order);
+		onOrderBurger(order, token);
 	};
 
 	checkValidity(value, rules) {
@@ -134,6 +136,16 @@ class ContactData extends Component {
 
 		if (rules.maxLength) {
 			isValid = value.length >= rules.maxLength && isValid;
+		}
+
+		if (rules.isEmail) {
+			const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+			isValid = pattern.test(value) && isValid;
+		}
+
+		if (rules.isNumeric) {
+			const pattern = /^\d+$/;
+			isValid = pattern.test(value) && isValid;
 		}
 		return isValid;
 	}
@@ -214,12 +226,15 @@ const mapStateToProps = (state) => {
 		ings: state.burgerBuilder.ingredients,
 		price: state.burgerBuilder.totalPrice,
 		loading: state.order.loading,
+		token: state.auth.token,
+		userId: state.auth.userId,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+		onOrderBurger: (orderData, token) =>
+			dispatch(actions.purchaseBurger(orderData, token)),
 	};
 };
 

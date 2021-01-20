@@ -5,15 +5,13 @@ import { connect } from 'react-redux';
 import CheckoutSummary from '../../componets/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
-import * as actions from '../../store/actions/index';
+// import * as actions from '../../store/actions/index';
 
 class Checkout extends Component {
 	componentWillUnmount() {
 		console.log('unmounted');
-		this.setState = (state, callback) => {
-			return;
-		};
 	}
+
 	checkoutCancelledHandler = () => {
 		this.props.history.goBack();
 	};
