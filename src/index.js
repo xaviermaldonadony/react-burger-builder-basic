@@ -22,7 +22,11 @@ import authReducer from './store/reducers/auth';
 // 	};
 // };
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+	process.env.NODE_ENV === 'development'
+		? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+		: null || compose;
+
 const rootReducer = combineReducers({
 	burgerBuilder: burgerBuilderReducer,
 	order: orderReducer,
@@ -47,5 +51,6 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
-// 18 19
+// 19 3
 //19
+//5 7

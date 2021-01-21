@@ -6,8 +6,6 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import classes from './Burger.module.css';
 
 const Burger = (props) => {
-	console.log('in burger');
-	console.log(props);
 	let transformedIngredients = Object.keys(props.ingredients)
 		.map((igKey) => {
 			//return  an array, spread a new array with the amount of the ingredient, its length

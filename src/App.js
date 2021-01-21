@@ -1,48 +1,58 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Checkout from './containers/Checkout/Checkout';
-import Orders from './containers/Orders/Orders';
-import Auth from './containers/Auth/Auth';
+// import Checkout from './containers/Checkout/Checkout';
+// import Orders from './containers/Orders/Orders';
+// import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
+import Spinner from './componets/UI/Spinner/Spinner';
 
 import * as actions from './store/actions/index';
+
+const Checkout = React.lazy(() => import('./containers/Checkout/Checkout'));
+const Orders = React.lazy(() => import('./containers/Orders/Orders'));
+const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 
 class App extends Component {
 	componentDidMount() {
 		this.props.onTryAutoSignUp();
 	}
 
-	shouldComponentUpdate() {
-		let empty = true;
-		for (let key in this.props.ings) {
-			// console.log(this.props.ings[key]);
-			if (this.props[key] > 0) empty = false;
-		}
-		console.log(this.props.purchased, empty);
-		// console.log(empty);
-		return !empty;
-	}
+	// shouldComponentUpdate() {
+	// 	let empty = true;
+	// 	for (let key in this.props.ings) {
+	// 		if (this.props.ings[key] > 0) {
+	// 			empty = false;
+	// 		}
+	// 	}
+	// 	console.log(empty);
+	// 	return !empty;
+	// }
 
 	// guards in place
 	renderRoutes = () => {
 		const { isAuthenticated } = this.props;
-
+		console.log('render routes');
 		return isAuthenticated ? (
 			<Switch>
-				<Route path='/checkout' component={Checkout} />
-				<Route path='/orders' component={Orders} />
-				<Route path='/logout' component={Logout} />
 				<Route path='/' exact component={BurgerBuilder} />
+				<Suspense fallback={<Spinner />}>
+					<Route path='/checkout' component={Checkout} />
+					<Route path='/orders' component={Orders} />
+					<Route path='/logout' component={Logout} />
+					<Route path='/auth' component={Auth} />
+				</Suspense>
 				<Redirect to='/' />
 			</Switch>
 		) : (
 			<Switch>
-				<Route path='/auth' component={Auth} />
 				<Route path='/' exact component={BurgerBuilder} />
+				<Suspense fallback={<Spinner />}>
+					<Route path='/auth' component={Auth} />
+				</Suspense>
 				<Redirect to='/' />
 			</Switch>
 		);

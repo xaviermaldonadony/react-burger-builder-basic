@@ -5,12 +5,10 @@ import { connect } from 'react-redux';
 import CheckoutSummary from '../../componets/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
-// import * as actions from '../../store/actions/index';
-
 class Checkout extends Component {
-	componentWillUnmount() {
-		console.log('unmounted');
-	}
+	// componentWillUnmount() {
+	// 	console.log('unmounted');
+	// }
 
 	checkoutCancelledHandler = () => {
 		this.props.history.goBack();
@@ -21,16 +19,13 @@ class Checkout extends Component {
 	};
 
 	render() {
-		// console.log(this.props);
 		let summary = <Redirect to='/' />;
 
 		if (this.props.ings) {
 			// when purchased burger it redirects to home
 			const pruchasedRedirect = this.props.purchased ? (
 				<Redirect to='/' />
-			) : (
-				'null'
-			);
+			) : null;
 			summary = (
 				<div>
 					{pruchasedRedirect}

@@ -10,9 +10,7 @@ import * as actions from '../../store/actions/index';
 
 class Orders extends Component {
 	componentDidMount() {
-		// console.log('Orders mount');
 		const { token, onFetchOrders, userId } = this.props;
-		console.log(userId);
 		onFetchOrders(token, userId);
 	}
 
