@@ -4,15 +4,15 @@ import NavigationItem from './NavigationItem/NavigationItem';
 
 import classes from './NavigationItems.module.css';
 
-const NavigationItems = (props) => (
+const NavigationItems = ({ isAuthenticated }) => (
 	<ul className={classes.NavigationItems}>
 		<NavigationItem link='/' exact>
 			Burger Builder
 		</NavigationItem>
-		{props.isAuthenticated ? (
+		{isAuthenticated ? (
 			<NavigationItem link='/orders'>Oders</NavigationItem>
 		) : null}
-		{!props.isAuthenticated ? (
+		{!isAuthenticated ? (
 			<NavigationItem link='/auth'>Athenticate</NavigationItem>
 		) : (
 			<NavigationItem link='/logout'>Logout</NavigationItem>

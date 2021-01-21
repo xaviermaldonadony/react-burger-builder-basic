@@ -32,7 +32,6 @@ class App extends Component {
 	// guards in place
 	renderRoutes = () => {
 		const { isAuthenticated } = this.props;
-		console.log('render routes');
 		return isAuthenticated ? (
 			<Switch>
 				<Route path='/' exact component={BurgerBuilder} />
