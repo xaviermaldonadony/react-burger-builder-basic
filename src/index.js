@@ -11,7 +11,13 @@ import App from './App';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
+<<<<<<< HEAD
 import { logoutSaga } from './store/sagas/auth';
+=======
+import { watchAuth } from './store/sagas/index';
+
+const sagaMiddleware = createSagaMiddleware();
+>>>>>>> 9615d8bc0f8460f414a566fb69e082baddd9a260
 
 // const logger = (store) => {
 // 	return (next) => {
@@ -42,7 +48,11 @@ const store = createStore(
 	composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
 );
 
+<<<<<<< HEAD
 sagaMiddleware.run(logoutSaga);
+=======
+sagaMiddleware.run(watchAuth);
+>>>>>>> 9615d8bc0f8460f414a566fb69e082baddd9a260
 
 const app = (
 	<Provider store={store}>
@@ -57,6 +67,10 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
+<<<<<<< HEAD
 // 24 5
+=======
+// 25 7
+>>>>>>> 9615d8bc0f8460f414a566fb69e082baddd9a260
 //19
 //5 7
