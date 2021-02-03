@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Auxiliary from '../Auxiliary/Auxiliary';
+import Aux from '../Aux/Aux';
 import classes from './Layout.module.css';
 import Toolbar from '../../componets/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../componets/Navigation/SideDrawer/SideDrawer';
@@ -25,7 +25,7 @@ class Layout extends Component {
 	render() {
 		const { isAuthenticated } = this.props;
 		return (
-			<Auxiliary>
+			<Aux>
 				<Toolbar
 					isAuth={isAuthenticated}
 					drawerToggleClicked={this.sideDrawerToggleHandler}
@@ -43,7 +43,7 @@ class Layout extends Component {
 				>
 					{this.props.children}
 				</main>
-			</Auxiliary>
+			</Aux>
 		);
 	}
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
+import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../componets/Burger/Burger';
 import BuildControls from '../../componets/Burger/BuildControls/BuildControls';
 import Modal from '../../componets/UI/Modal/Modal';
@@ -73,7 +73,7 @@ export class BurgerBuilder extends Component {
 			// console.log('in burgerbuilder');
 			// console.log(this.props.ings);
 			burger = (
-				<Auxiliary>
+				<Aux>
 					<Burger ingredients={this.props.ings} />
 					<BuildControls
 						ingredientAdded={this.props.onIngredientAdded}
@@ -84,7 +84,7 @@ export class BurgerBuilder extends Component {
 						price={this.props.price}
 						ordered={this.purchaseHandler}
 					/>
-				</Auxiliary>
+				</Aux>
 			);
 			orderSummary = (
 				<OrderSummary
@@ -97,7 +97,7 @@ export class BurgerBuilder extends Component {
 		}
 
 		return (
-			<Auxiliary>
+			<Aux>
 				<Modal
 					show={this.state.purchasing}
 					modalClosed={this.purchaseCancelHandler}
@@ -106,7 +106,7 @@ export class BurgerBuilder extends Component {
 					{orderSummary}
 				</Modal>
 				{burger}
-			</Auxiliary>
+			</Aux>
 		);
 	}
 }
