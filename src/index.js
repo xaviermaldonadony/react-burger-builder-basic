@@ -58,6 +58,6 @@ ReactDOM.render(
 	<React.StrictMode>{app}</React.StrictMode>,
 	document.getElementById('root')
 );
-// 25 7
+// 27 10
 //19
 //5 7

@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -13,25 +13,13 @@ const Checkout = React.lazy(() => import('./containers/Checkout/Checkout'));
 const Orders = React.lazy(() => import('./containers/Orders/Orders'));
 const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 
-class App extends Component {
-	componentDidMount() {
-		this.props.onTryAutoSignUp();
-	}
-
-	// shouldComponentUpdate() {
-	// 	let empty = true;
-	// 	for (let key in this.props.ings) {
-	// 		if (this.props.ings[key] > 0) {
-	// 			empty = false;
-	// 		}
-	// 	}
-	// 	console.log(empty);
-	// 	return !empty;
-	// }
+const App = ({ onTryAutoSignUp, isAuthenticated }) => {
+	useEffect(() => {
+		onTryAutoSignUp();
+	}, [onTryAutoSignUp]);
 
 	// guards in place
-	renderRoutes = () => {
-		const { isAuthenticated } = this.props;
+	const renderRoutes = () => {
 		return isAuthenticated ? (
 			<Switch>
 				<Route path='/' exact component={BurgerBuilder} />
@@ -54,15 +42,13 @@ class App extends Component {
 		);
 	};
 
-	render() {
-		const routes = this.renderRoutes();
-		return (
-			<div>
-				<Layout>{routes}</Layout>
-			</div>
-		);
-	}
-}
+	const routes = renderRoutes();
+	return (
+		<div>
+			<Layout>{routes}</Layout>
+		</div>
+	);
+};
 
 const mapStateToProps = (state) => {
 	return {
